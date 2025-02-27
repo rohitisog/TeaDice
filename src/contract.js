@@ -1,4 +1,4 @@
-export const contractAddress = "0x8a423497b05F2267C9102BD8D214E55989D424F3";
+export const contractAddress = "0xFA88760e6430687DeAB9e5b6021b4Bc511Bf424c";
 // export const contractAddress = "0x7F4f1f89B7A1481b6aBC37df2D725C24D6d5c3cC";
 export const abi =[
 	{
@@ -27,7 +27,13 @@ export const abi =[
 		"type": "event"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "diceResult",
+				"type": "uint256"
+			}
+		],
 		"name": "rollDice",
 		"outputs": [
 			{
@@ -110,8 +116,6 @@ export const abi =[
 		"type": "function"
 	}
 ]
-
-
 
 
 

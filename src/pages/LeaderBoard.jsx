@@ -21,19 +21,17 @@ const LeaderBoard = ({ diceGameContract }) => {
   };
 
   useEffect(() => {
+    // Immediately fetch leaderboard on mount
     fetchLeaderboard();
-    if (!diceGameContract) return;
-    // Update leaderboard in realtime by listening to DiceRolled events.
-    const listener = () => fetchLeaderboard();
-    diceGameContract.on("DiceRolled", listener);
-    return () => {
-      diceGameContract.off("DiceRolled", listener);
-    };
+
+    // Poll for leaderboard updates every 5 seconds.
+    const intervalId = setInterval(fetchLeaderboard, 5000);
+    return () => clearInterval(intervalId);
   }, [diceGameContract]);
 
   return (
     <motion.div
-      className="min-h-screen flex flex-col items-center justify-center px-4"
+      className="min-h-screen flex flex-col items-center  px-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
@@ -51,7 +49,9 @@ const LeaderBoard = ({ diceGameContract }) => {
             {leaderboard.map((item, index) => (
               <tr key={item.player} className="border-b border-white">
                 <td className="py-2">{index + 1}</td>
-                <td className="py-2">{item.player.slice(0, 6)}...{item.player.slice(-4)}</td>
+                <td className="py-2">
+                  {item.player.slice(0, 6)}...{item.player.slice(-4)}
+                </td>
                 <td className="py-2">{item.score}</td>
               </tr>
             ))}
