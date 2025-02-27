@@ -15,4 +15,8 @@ body {
   /* Use our background color (do not use plain black or white) */
   background-color: #6e54ff;
   color: white;
+  background-image: url('../public/page-bg.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
