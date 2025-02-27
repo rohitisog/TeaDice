@@ -37,14 +37,10 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
 
   return (
     <header className="bg-[#6e54ff] py-4 tracking-wide"
-    style={
-      {
-        backgroundImage: "url('/header-bg.svg')",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }
-    }
+    style={{
+      backgroundImage: "url('/header-bg.svg')",
+      
+    }}
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
         {/* Mobile Header: Logo, Wallet Info, and Toggle */}
