@@ -40,9 +40,9 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
         {/* Mobile Header: Logo, Wallet Info, and Toggle */}
         <div className="w-full flex items-center justify-between md:hidden">
-          <div className="text-3xl font-bold uppercase tracking-widest">
+          <Link to={"/"} className="text-3xl font-bold uppercase tracking-widest">
             MONADICE
-          </div>
+          </Link>
           <div className="flex items-center gap-2">
             {account ? (
               <button
@@ -73,9 +73,9 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
 
         {/* Desktop Header: Logo, Nav Links, Wallet Info */}
         <div className="hidden md:flex w-full items-center justify-between">
-          <div className="text-3xl font-bold uppercase tracking-widest">
+          <Link to={"/"} className="text-3xl font-bold uppercase tracking-widest">
             MONADICE
-          </div>
+          </Link>
           <nav className="flex space-x-6">
             <Link
               to="/"
