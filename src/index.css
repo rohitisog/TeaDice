@@ -13,8 +13,6 @@
 /* Custom global styles */
 body {
   /* Use our background color (do not use plain black or white) */
-  /* background-image: url("../public/dragon-scales.svg"); */
-  /* background-image: url("../../public/endless-constellation.svg"); */
   background-color: #6e54ff;
   color: white;
 }
