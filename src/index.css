@@ -13,6 +13,7 @@
 /* Custom global styles */
 body {
   /* Use our background color (do not use plain black or white) */
-  background-color: #6e54ff;
+  background-image: url("../public/dragon-scales.svg");
+  /* background-color: #6e54ff; */
   color: white;
 }
