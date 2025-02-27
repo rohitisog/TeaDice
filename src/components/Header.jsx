@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./header.css";
 import {
   Home as HomeIcon,
   Dice5,
@@ -36,7 +37,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
   }, [account]);
 
   return (
-    <header className="bg-[#6e54ff] py-4 tracking-wide">
+    <header className=" py-4 tracking-wide bg-header">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
         {/* Mobile Header: Logo, Wallet Info, and Toggle */}
         <div className="w-full flex items-center justify-between md:hidden">
