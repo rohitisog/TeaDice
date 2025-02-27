@@ -8,9 +8,10 @@ const LeaderBoard = ({ diceGameContract }) => {
     if (!diceGameContract) return;
     try {
       const players = await diceGameContract.getPlayers();
+      // Convert each player's score to a number
       const scoresPromises = players.map(async (player) => {
         const score = await diceGameContract.getUserScore(player);
-        return { player, score: score.toNumber() };
+        return { player, score: Number(score) };
       });
       let scoresArray = await Promise.all(scoresPromises);
       scoresArray.sort((a, b) => b.score - a.score);
@@ -21,10 +22,8 @@ const LeaderBoard = ({ diceGameContract }) => {
   };
 
   useEffect(() => {
-    // Immediately fetch leaderboard on mount
+    // Immediately fetch leaderboard and then poll every 5 seconds
     fetchLeaderboard();
-
-    // Poll for leaderboard updates every 5 seconds.
     const intervalId = setInterval(fetchLeaderboard, 5000);
     return () => clearInterval(intervalId);
   }, [diceGameContract]);
@@ -46,15 +45,21 @@ const LeaderBoard = ({ diceGameContract }) => {
             </tr>
           </thead>
           <tbody>
-            {leaderboard.map((item, index) => (
-              <tr key={item.player} className="border-b border-white">
-                <td className="py-2">{index + 1}</td>
-                <td className="py-2">
-                  {item.player.slice(0, 6)}...{item.player.slice(-4)}
-                </td>
-                <td className="py-2">{item.score}</td>
+            {leaderboard.length > 0 ? (
+              leaderboard.map((item, index) => (
+                <tr key={item.player} className="border-b border-white">
+                  <td className="py-2">{index + 1}</td>
+                  <td className="py-2">
+                    {item.player.slice(0, 6)}...{item.player.slice(-4)}
+                  </td>
+                  <td className="py-2">{item.score}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="py-2" colSpan="3">NO PLAYERS FOUND</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

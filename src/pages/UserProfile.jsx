@@ -10,11 +10,11 @@ const UserProfile = ({ account, diceGameContract }) => {
     if (diceGameContract && account) {
       try {
         const userScore = await diceGameContract.getUserScore(account);
-        setScore(userScore.toNumber());
+        setScore(Number(userScore));
         const players = await diceGameContract.getPlayers();
         const scoresPromises = players.map(async (player) => {
           const score = await diceGameContract.getUserScore(player);
-          return { player, score: score.toNumber() };
+          return { player, score: Number(score) };
         });
         let scoresArray = await Promise.all(scoresPromises);
         scoresArray.sort((a, b) => b.score - a.score);
@@ -22,7 +22,6 @@ const UserProfile = ({ account, diceGameContract }) => {
           (item) => item.player.toLowerCase() === account.toLowerCase()
         ) + 1;
         setRank(userRank);
-        // Future: Fetch transaction events here if desired.
       } catch (error) {
         console.error("ERROR FETCHING USER DATA:", error);
       }
@@ -30,7 +29,10 @@ const UserProfile = ({ account, diceGameContract }) => {
   };
 
   useEffect(() => {
+    // Fetch data immediately and poll every 5 seconds
     fetchUserData();
+    const intervalId = setInterval(fetchUserData, 5000);
+    return () => clearInterval(intervalId);
   }, [diceGameContract, account]);
 
   return (
