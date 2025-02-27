@@ -9,8 +9,11 @@ const UserProfile = ({ account, diceGameContract }) => {
   const fetchUserData = async () => {
     if (diceGameContract && account) {
       try {
+        // Get the user's score from the contract.
         const userScore = await diceGameContract.getUserScore(account);
         setScore(Number(userScore));
+
+        // Get all players and determine the user's rank.
         const players = await diceGameContract.getPlayers();
         const scoresPromises = players.map(async (player) => {
           const score = await diceGameContract.getUserScore(player);
@@ -28,10 +31,36 @@ const UserProfile = ({ account, diceGameContract }) => {
     }
   };
 
+  const fetchTransactions = async () => {
+    if (diceGameContract && account) {
+      try {
+        // Create a filter for DiceRolled events for this account.
+        const filter = diceGameContract.filters.DiceRolled(account);
+        // Query for all events matching the filter.
+        const events = await diceGameContract.queryFilter(filter);
+        // Get the last 10 events, reversing so the most recent appears first.
+        const last10Events = events.slice(-10).reverse();
+        const txs = last10Events.map((event) => ({
+          diceResult: event.args.diceResult.toString(),
+          newScore: event.args.newScore.toString(),
+          txHash: event.transactionHash,
+          blockNumber: event.blockNumber,
+        }));
+        setTransactions(txs);
+      } catch (error) {
+        console.error("ERROR FETCHING TRANSACTIONS:", error);
+      }
+    }
+  };
+
   useEffect(() => {
-    // Fetch data immediately and poll every 5 seconds
+    // Fetch user data and transactions immediately, then poll every 5 seconds.
     fetchUserData();
-    const intervalId = setInterval(fetchUserData, 5000);
+    fetchTransactions();
+    const intervalId = setInterval(() => {
+      fetchUserData();
+      fetchTransactions();
+    }, 5000);
     return () => clearInterval(intervalId);
   }, [diceGameContract, account]);
 
@@ -52,7 +81,9 @@ const UserProfile = ({ account, diceGameContract }) => {
         ) : (
           <ul>
             {transactions.map((tx, index) => (
-              <li key={index}>{tx}</li>
+              <li key={index} className="mb-2">
+                TX: {tx.txHash.slice(0, 6)}...{tx.txHash.slice(-4)} | DICE: {tx.diceResult} | SCORE: {tx.newScore} | BLOCK: {tx.blockNumber}
+              </li>
             ))}
           </ul>
         )}

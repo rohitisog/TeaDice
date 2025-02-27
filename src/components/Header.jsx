@@ -6,7 +6,7 @@ const Header = ({ account, connectWallet }) => {
   return (
     <header className="bg-[#6e54ff] py-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
-        <div className="text-2xl font-bold uppercase">MONADICE</div>
+        <Link to="/" className="text-2xl font-bold uppercase">MONADICE</Link>
         <nav>
           <ul className="flex gap-6">
             <li>
