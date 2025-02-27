@@ -16,7 +16,7 @@ body {
   background-color: #6e54ff;
   color: white;
   background-image: url('../public/page-bg.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+  /* background-position: center; */
 }
