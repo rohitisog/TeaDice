@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  font-family: "Bangers", serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+/* Custom global styles */
+body {
+  /* Use our background color (do not use plain black or white) */
+  background-color: #6e54ff;
+  color: white;
+}
