@@ -42,7 +42,7 @@ const App = () => {
         setDiceGameContract(contractInstance);
         checkNetwork();
       } catch (error) {
-        console.error("Wallet connection failed:", error);
+        console.error("WALLET CONNECTION FAILED:", error);
       }
     } else {
       alert("PLEASE INSTALL METAMASK!");
@@ -79,13 +79,22 @@ const App = () => {
     }
   };
 
+  // Disconnect wallet simply by clearing the account and contract state.
+  const disconnectWallet = () => {
+    setAccount(null);
+    setDiceGameContract(null);
+  };
+
   useEffect(() => {
-    connectWallet();
+    // Auto-connect wallet on mount if already connected.
+    if (window.ethereum && window.ethereum.selectedAddress) {
+      connectWallet();
+    }
   }, []);
 
   return (
     <Router>
-      <Header account={account} connectWallet={connectWallet} />
+      <Header account={account} connectWallet={connectWallet} disconnectWallet={disconnectWallet} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
