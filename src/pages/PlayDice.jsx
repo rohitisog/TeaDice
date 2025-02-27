@@ -34,7 +34,7 @@ const PlayDice = ({ diceGameContract, account }) => {
 
   const rollDice = async () => {
     if (!diceGameContract) {
-      toast.error("CONTRACT NOT CONNECTED!");
+      toast.error("WALLET NOT CONNECTED!");
       return;
     }
     try {
