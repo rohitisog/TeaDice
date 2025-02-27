@@ -72,7 +72,7 @@ const NFTMarketplace = () => {
       animate={{ opacity: 1 }}
     >
       <h2 className="text-4xl mb-8 uppercase">NFT MARKETPLACE</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto">
         {dummyNFTs.map((nft) => (
           <motion.div
             key={nft.id}
