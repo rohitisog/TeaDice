@@ -8,7 +8,6 @@ const LeaderBoard = ({ diceGameContract }) => {
     if (!diceGameContract) return;
     try {
       const players = await diceGameContract.getPlayers();
-      // Convert each player's score to a number
       const scoresPromises = players.map(async (player) => {
         const score = await diceGameContract.getUserScore(player);
         return { player, score: Number(score) };
@@ -22,7 +21,6 @@ const LeaderBoard = ({ diceGameContract }) => {
   };
 
   useEffect(() => {
-    // Immediately fetch leaderboard and then poll every 5 seconds
     fetchLeaderboard();
     const intervalId = setInterval(fetchLeaderboard, 5000);
     return () => clearInterval(intervalId);
@@ -30,7 +28,7 @@ const LeaderBoard = ({ diceGameContract }) => {
 
   return (
     <motion.div
-      className="min-h-screen flex flex-col items-center  px-4"
+      className="min-h-screen flex flex-col items-center px-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
@@ -50,7 +48,14 @@ const LeaderBoard = ({ diceGameContract }) => {
                 <tr key={item.player} className="border-b border-white">
                   <td className="py-2">{index + 1}</td>
                   <td className="py-2">
-                    {item.player.slice(0, 6)}...{item.player.slice(-4)}
+                    <a
+                      href={`https://sepolia.tea.xyz/address/${item.player}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white  hover:underline shadow-white"
+                    >
+                      {item.player.slice(0, 6)}...{item.player.slice(-4)}
+                    </a>
                   </td>
                   <td className="py-2">{item.score}</td>
                 </tr>
