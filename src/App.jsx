@@ -11,16 +11,17 @@ import NFTMarketplace from "./pages/NFTMarketplace";
 import UserProfile from "./pages/UserProfile";
 import { contractAddress, abi } from "./contract";
 
-const MONAD_TESTNET_PARAMS = {
-  chainId: "0x279F", // 10143 in hexadecimal
-  chainName: "Monad Testnet",
+const TEA_SEPOLIA_PARAMS = {
+  chainId: "0x27eA", // 10218 in hexadecimal
+  chainName: "Tea Sepolia",
   nativeCurrency: {
-    name: "MON",
-    symbol: "MON",
+    name: "TEA",
+    symbol: "TEA",
     decimals: 18,
   },
-  rpcUrls: ["https://testnet-rpc.monad.xyz"],
-  blockExplorerUrls: ["https://testnet-explorer.monad.xyz"],
+  rpcUrls: ["https://tea-sepolia.g.alchemy.com/public"],
+  blockExplorerUrls: ["https://sepolia.tea.xyz"],
+
 };
 
 const App = () => {
@@ -34,13 +35,23 @@ const App = () => {
         const provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
-        const contractInstance = new ethers.Contract(contractAddress, abi, signer);
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const contractInstance = new ethers.Contract(
+          contractAddress,
+          abi,
+          signer
+        );
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
 
         setAccount(accounts[0]);
         setDiceGameContract(contractInstance);
         checkNetwork();
-        toast.success(`Wallet Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`);
+        toast.success(
+          `Wallet Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(
+            -4
+          )}`
+        );
       } catch (error) {
         toast.error("Wallet connection failed!");
         console.error("WALLET CONNECTION FAILED:", error);
@@ -55,25 +66,25 @@ const App = () => {
       const chainId = await window.ethereum.request({ method: "eth_chainId" });
       setNetwork(chainId);
 
-      if (chainId !== MONAD_TESTNET_PARAMS.chainId) {
+      if (chainId !== TEA_SEPOLIA_PARAMS.chainId) {
         try {
           await window.ethereum.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: MONAD_TESTNET_PARAMS.chainId }],
+            params: [{ chainId: TEA_SEPOLIA_PARAMS.chainId }],
           });
-          setNetwork(MONAD_TESTNET_PARAMS.chainId);
-          toast.info("Switched to Monad Testnet");
+          setNetwork(TEA_SEPOLIA_PARAMS.chainId);
+          toast.info("Switched to Tea Sepolia Testnet");
         } catch (switchError) {
           if (switchError.code === 4902) {
             try {
               await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                params: [MONAD_TESTNET_PARAMS],
+                params: [TEA_SEPOLIA_PARAMS],
               });
-              toast.success("Monad Testnet Added!");
+              toast.success("Tea Sepolia Testnet Added!");
             } catch (addError) {
-              toast.error("Failed to add Monad Testnet!");
-              console.error("FAILED TO ADD MONAD TESTNET:", addError);
+              toast.error("Failed to add Tea Sepolia Testnet!");
+              console.error("FAILED TO ADD Tea Sepolia TESTNET:", addError);
             }
           } else {
             toast.error("Error switching network!");
@@ -100,15 +111,39 @@ const App = () => {
 
   return (
     <Router>
-      <Header account={account} connectWallet={connectWallet} disconnectWallet={disconnectWallet} />
+      <Header
+        account={account}
+        connectWallet={connectWallet}
+        disconnectWallet={disconnectWallet}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/play-dice" element={<PlayDice diceGameContract={diceGameContract} account={account} />} />
-        <Route path="/leaderboard" element={<LeaderBoard diceGameContract={diceGameContract} />} />
+        <Route
+          path="/play-dice"
+          element={
+            <PlayDice diceGameContract={diceGameContract} account={account} />
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={<LeaderBoard diceGameContract={diceGameContract} />}
+        />
         <Route path="/nft-marketplace" element={<NFTMarketplace />} />
-        <Route path="/user-profile" element={<UserProfile account={account} diceGameContract={diceGameContract} />} />
+        <Route
+          path="/user-profile"
+          element={
+            <UserProfile
+              account={account}
+              diceGameContract={diceGameContract}
+            />
+          }
+        />
       </Routes>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+      />
     </Router>
   );
 };

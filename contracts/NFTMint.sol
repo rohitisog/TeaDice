@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -8,11 +7,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract NFTMint is ERC721, Ownable {
     uint256 public tokenCounter;
 
-    constructor() ERC721("Monadice", "mDice") {
+    constructor() ERC721("TeaDice", "tDice") {
         tokenCounter = 1;
     }
 
-    function mintNFT(address to, string memory tokenURI) public onlyOwner returns (uint256) {
+    function mintNFT(
+        address to,
+        string memory tokenURI
+    ) public onlyOwner returns (uint256) {
         uint256 newTokenId = tokenCounter;
         _safeMint(to, newTokenId);
         tokenCounter += 1;

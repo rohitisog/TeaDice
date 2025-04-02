@@ -36,19 +36,23 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
   }, [account]);
 
   return (
-    <header className="bg-[#6e54ff] py-4 tracking-wide"
-    style={{
-      backgroundImage: "url('/header-bg.svg')",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    }}
+    <header
+      className="bg-[#6e54ff] py-4 tracking-wide"
+      style={{
+        backgroundImage: "url('/header-bg.svg')",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
         {/* Mobile Header: Logo, Wallet Info, and Toggle */}
         <div className="w-full flex items-center justify-between md:hidden">
-          <Link to={"/"} className="text-3xl font-bold uppercase tracking-widest">
-            MONADICE
+          <Link
+            to={"/"}
+            className="text-3xl font-bold uppercase tracking-widest"
+          >
+            TeaDice
           </Link>
           <div className="flex items-center gap-2">
             {account ? (
@@ -58,7 +62,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
                 title="Click to disconnect wallet"
               >
                 <span className="text-[#f50db4] text-lg">
-                  {balance ? `${Number(balance).toFixed(2)} MON` : "0.00 MON"}
+                  {balance ? `${Number(balance).toFixed(2)} TEA` : "0.00 TEA"}
                 </span>
                 <span className="text-[#6e54ff] font-semibold tracking-wide text-lg">
                   {account.slice(0, 3)}...{account.slice(-3)}
@@ -80,8 +84,11 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
 
         {/* Desktop Header: Logo, Nav Links, Wallet Info */}
         <div className="hidden md:flex w-full items-center justify-between">
-          <Link to={"/"} className="text-3xl font-bold uppercase tracking-widest">
-            MONADICE
+          <Link
+            to={"/"}
+            className="text-3xl font-bold uppercase tracking-widest"
+          >
+            TeaDice
           </Link>
           <nav className="flex space-x-6">
             <Link
@@ -123,7 +130,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
                 title="Click to disconnect wallet"
               >
                 <span className="text-[#f50db4] text-lg">
-                  {balance ? `${Number(balance).toFixed(2)} MON` : "0.00 MON"}
+                  {balance ? `${Number(balance).toFixed(2)} TEA` : "0.00 TEA"}
                 </span>
                 <span className="text-[#6e54ff] font-semibold tracking-wide text-lg">
                   {account.slice(0, 4)}...{account.slice(-4)}
