@@ -17,6 +17,7 @@ body {
   color: white;
   background-image: url('../public/page-bg.svg');
   /* background-repeat: no-repeat; */
-  /* background-size: cover; */
+  background-size: cover;
+  object-fit: fill;
   /* background-position: center; */
 }

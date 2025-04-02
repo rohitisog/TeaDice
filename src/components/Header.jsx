@@ -37,12 +37,12 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
 
   return (
     <header
-      className="bg-[#6e54ff] py-4 tracking-wide"
+      className="bg-[#2e8b57] py-4 tracking-wide"
       style={{
         backgroundImage: "url('/header-bg.svg')",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        // backgroundPosition: "center",
       }}
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
@@ -50,7 +50,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
         <div className="w-full flex items-center justify-between md:hidden">
           <Link
             to={"/"}
-            className="text-3xl font-bold uppercase tracking-widest"
+            className="text-3xl font-bold uppercase tracking-widest text-white"
           >
             TeaDice
           </Link>
@@ -71,12 +71,12 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
             ) : (
               <button
                 onClick={connectWallet}
-                className="bg-[#f50db4] px-3 py-2 rounded uppercase text-lg"
+                className="bg-[#10b981] px-3 py-2 rounded uppercase text-lg text-white"
               >
                 CONNECT
               </button>
             )}
-            <button onClick={() => setIsOpen(!isOpen)} className="ml-2">
+            <button onClick={() => setIsOpen(!isOpen)} className="ml-2 text-white">
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
@@ -86,38 +86,38 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
         <div className="hidden md:flex w-full items-center justify-between">
           <Link
             to={"/"}
-            className="text-3xl font-bold uppercase tracking-widest"
+            className="text-3xl font-bold uppercase tracking-widest text-white"
           >
             TeaDice
           </Link>
           <nav className="flex space-x-6">
             <Link
               to="/"
-              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
             >
               <HomeIcon size={20} /> HOME
             </Link>
             <Link
               to="/play-dice"
-              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
             >
               <Dice5 size={20} /> PLAY DICE
             </Link>
             <Link
               to="/leaderboard"
-              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
             >
               <Trophy size={20} /> LEADERBOARD
             </Link>
             <Link
               to="/nft-marketplace"
-              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
             >
               <ShoppingCart size={20} /> BUY NFTs
             </Link>
             <Link
               to="/user-profile"
-              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+              className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
             >
               <User size={20} /> PROFILE
             </Link>
@@ -139,7 +139,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
             ) : (
               <button
                 onClick={connectWallet}
-                className="bg-[#f50db4] px-4 py-2 rounded uppercase text-lg"
+                className="bg-[#10b981] px-4 py-2 rounded uppercase text-lg text-white"
               >
                 CONNECT WALLET
               </button>
@@ -156,7 +156,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
               <Link
                 to="/"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
               >
                 <HomeIcon size={20} /> HOME
               </Link>
@@ -165,7 +165,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
               <Link
                 to="/play-dice"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
               >
                 <Dice5 size={20} /> PLAY DICE
               </Link>
@@ -174,7 +174,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
               <Link
                 to="/leaderboard"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
               >
                 <Trophy size={20} /> LEADERBOARD
               </Link>
@@ -183,7 +183,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
               <Link
                 to="/nft-marketplace"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
               >
                 <ShoppingCart size={20} /> BUY NFTs
               </Link>
@@ -192,7 +192,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
               <Link
                 to="/user-profile"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg"
+                className="flex items-center gap-1 hover:text-[#f50db4] uppercase text-lg text-white"
               >
                 <User size={20} /> PROFILE
               </Link>

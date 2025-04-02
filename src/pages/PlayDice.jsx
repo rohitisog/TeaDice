@@ -86,13 +86,15 @@ const PlayDice = ({ diceGameContract, account }) => {
     <motion.div className="min-h-screen flex flex-col items-center justify-center px-4 space-y-8">
       <h2 className="text-4xl mb-6">PLAY DICE</h2>
       <div className="flex flex-col items-center space-y-4">
-        <div className="text-3xl">{rolling ? displayedDice : finalDice !== null ? finalDice : "-"}</div>
+        <div className="text-3xl">
+          {rolling ? displayedDice : finalDice !== null ? finalDice : "-"}
+        </div>
         <div className="text-2xl">YOUR SCORE: {score} XP</div>
         <motion.button
           onClick={rollDice}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-[#f50db4] px-6 py-3 rounded uppercase text-xl"
+          className="bg-[#10b981] px-6 py-3 rounded uppercase text-xl"
         >
           ROLL DICE
         </motion.button>

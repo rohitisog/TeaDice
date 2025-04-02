@@ -87,7 +87,7 @@ const NFTMarketplace = () => {
             <div className="flex items-center justify-between space-x-4">
               <h3 className="text-2xl uppercase">{nft.name}</h3>
               <p className="uppercase">{nft.price}</p>
-              <button className="bg-[#f50db4] px-4 py-2 rounded uppercase">
+              <button className="bg-[#10b981] px-4 py-2 rounded uppercase">
                 BUY
               </button>
             </div>

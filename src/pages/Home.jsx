@@ -18,7 +18,7 @@ const Home = () => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-[#f50db4] px-6 py-3 rounded uppercase text-xl"
+          className="bg-[#10b981] px-6 py-3 rounded uppercase text-xl"
         >
           PLAY NOW
         </motion.button>
