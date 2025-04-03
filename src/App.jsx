@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
+import Web3Modal from "web3modal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
@@ -21,58 +22,61 @@ const TEA_SEPOLIA_PARAMS = {
   },
   rpcUrls: ["https://tea-sepolia.g.alchemy.com/public"],
   blockExplorerUrls: ["https://sepolia.tea.xyz"],
-
 };
 
 const App = () => {
   const [account, setAccount] = useState(null);
   const [diceGameContract, setDiceGameContract] = useState(null);
   const [network, setNetwork] = useState(null);
+  const [web3Modal, setWeb3Modal] = useState(null);
+
+  useEffect(() => {
+    const web3ModalInstance = new Web3Modal({
+      cacheProvider: true, // Auto-connect if the user was previously connected
+    });
+    setWeb3Modal(web3ModalInstance);
+
+    // Auto-connect if a provider was cached
+    if (web3ModalInstance.cachedProvider) {
+      connectWallet();
+    }
+  }, []);
 
   const connectWallet = async () => {
-    if (window.ethereum) {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        const signer = await provider.getSigner();
-        const contractInstance = new ethers.Contract(
-          contractAddress,
-          abi,
-          signer
-        );
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
+    try {
+      if (!web3Modal) return;
+      const instance = await web3Modal.connect();
+      const provider = new ethers.BrowserProvider(instance);
+      const signer = await provider.getSigner();
+      const contractInstance = new ethers.Contract(contractAddress, abi, signer);
 
-        setAccount(accounts[0]);
+      const accounts = await provider.listAccounts();
+      if (accounts.length > 0) {
+        setAccount(accounts[0].address);
         setDiceGameContract(contractInstance);
         checkNetwork();
-        toast.success(
-          `Wallet Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(
-            -4
-          )}`
-        );
-      } catch (error) {
-        toast.error("Wallet connection failed!");
-        console.error("WALLET CONNECTION FAILED:", error);
+        toast.success(`Wallet Connected: ${accounts[0].address.slice(0, 6)}...${accounts[0].address.slice(-4)}`);
       }
-    } else {
-      toast.warning("Please install MetaMask!");
+    } catch (error) {
+      toast.error("Wallet connection failed!");
+      console.error("WALLET CONNECTION FAILED:", error);
     }
   };
 
   const checkNetwork = async () => {
-    if (window.ethereum) {
-      const chainId = await window.ethereum.request({ method: "eth_chainId" });
-      setNetwork(chainId);
+    if (!window.ethereum) return;
 
-      if (chainId !== TEA_SEPOLIA_PARAMS.chainId) {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const network = await provider.getNetwork();
+      setNetwork(network.chainId);
+
+      if (network.chainId !== parseInt(TEA_SEPOLIA_PARAMS.chainId, 16)) {
         try {
           await window.ethereum.request({
             method: "wallet_switchEthereumChain",
             params: [{ chainId: TEA_SEPOLIA_PARAMS.chainId }],
           });
-          setNetwork(TEA_SEPOLIA_PARAMS.chainId);
           toast.info("Switched to Tea Sepolia Testnet");
         } catch (switchError) {
           if (switchError.code === 4902) {
@@ -84,66 +88,38 @@ const App = () => {
               toast.success("Tea Sepolia Testnet Added!");
             } catch (addError) {
               toast.error("Failed to add Tea Sepolia Testnet!");
-              console.error("FAILED TO ADD Tea Sepolia TESTNET:", addError);
             }
           } else {
             toast.error("Error switching network!");
-            console.error("ERROR SWITCHING NETWORK:", switchError);
           }
         }
       }
+    } catch (error) {
+      console.error("Network check failed:", error);
     }
   };
 
-  // Disconnect wallet simply by clearing the account and contract state.
-  const disconnectWallet = () => {
-    toast.info("Wallet Disconnected");
+  const disconnectWallet = async () => {
+    if (web3Modal) {
+      await web3Modal.clearCachedProvider();
+    }
     setAccount(null);
     setDiceGameContract(null);
+    toast.info("Wallet Disconnected");
   };
 
-  useEffect(() => {
-    // Auto-connect wallet on mount if already connected.
-    if (window.ethereum && window.ethereum.selectedAddress) {
-      connectWallet();
-    }
-  }, []);
-
   return (
-    <Router>
-      <Header
-        account={account}
-        connectWallet={connectWallet}
-        disconnectWallet={disconnectWallet}
-      />
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+
+      <Header account={account} connectWallet={connectWallet} disconnectWallet={disconnectWallet} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/play-dice"
-          element={
-            <PlayDice diceGameContract={diceGameContract} account={account} />
-          }
-        />
-        <Route
-          path="/leaderboard"
-          element={<LeaderBoard diceGameContract={diceGameContract} />}
-        />
+        <Route path="/play-dice" element={<PlayDice diceGameContract={diceGameContract} account={account} />} />
+        <Route path="/leaderboard" element={<LeaderBoard diceGameContract={diceGameContract} />} />
         <Route path="/nft-marketplace" element={<NFTMarketplace />} />
-        <Route
-          path="/user-profile"
-          element={
-            <UserProfile
-              account={account}
-              diceGameContract={diceGameContract}
-            />
-          }
-        />
+        <Route path="/user-profile" element={<UserProfile account={account} diceGameContract={diceGameContract} />} />
       </Routes>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-      />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </Router>
   );
 };
