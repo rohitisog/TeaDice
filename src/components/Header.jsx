@@ -150,7 +150,7 @@ const Header = ({ account, connectWallet, disconnectWallet }) => {
 
       {/* Mobile Navigation Menu */}
       {isOpen && (
-        <nav className="md:hidden bg-[#6e54ff] mt-2">
+        <nav className="md:hidden bg-[#2e8b57] mt-2">
           <ul className="flex flex-col space-y-2 px-4 py-2">
             <li>
               <Link
