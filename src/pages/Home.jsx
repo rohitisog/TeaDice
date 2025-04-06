@@ -37,17 +37,7 @@ const Home = () => {
           <li className="mb-2">CHECK THE LEADERBOARD FOR YOUR RANK</li>
         </motion.ul>
       </div>
-      <div className="mt-8 flex items-center gap-2">
-        <motion.a
-          href="https://github.com/rohitisog/TeaDice"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-green-300 hover:underline shadow-white text-xl flex items-center gap-2"
-          whileHover={{ scale: 1.1 }}
-        >
-          <FaGithub className="text-2xl" /> ⭐ Contribute & Star 
-        </motion.a>
-      </div>
+     
     </motion.div>
   );
 };
