@@ -8,6 +8,7 @@ const LeaderBoard = ({ diceGameContract }) => {
     if (!diceGameContract) return;
     try {
       const players = await diceGameContract.getPlayers();
+      console.log(players)
       const scoresPromises = players.map(async (player) => {
         const score = await diceGameContract.getUserScore(player);
         return { player, score: Number(score) };
